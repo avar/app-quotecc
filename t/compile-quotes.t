@@ -27,7 +27,7 @@ for my $test (@test) {
     my ($fh2, $output) = tempfile( DIR => $dir, SUFFIX => '.c', EXLOCK => 0 );
 
     my $cmd = qq[curl -s '$url' --output '$quotes'];
-    diag "executing $cmd";
+    #diag "executing $cmd";
     system $cmd;
     App::QuoteCC->new(
         quotes => $quotes,
@@ -38,7 +38,7 @@ for my $test (@test) {
     ok(-s $output, "$output is non-zero size");
 
     $cmd = qq[gcc -Wall $output -o $output.exe];
-    diag "executing $cmd";
+    #diag "executing $cmd";
     system $cmd;
 
     for (1..10) {
