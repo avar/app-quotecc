@@ -60,7 +60,7 @@ sub run {
     };
 
     # Get output
-    my $out = $self->process_template($quotes);
+    my $out = $self->_process_template($quotes);
 
     # Spew output
     given ($self->output) {
@@ -75,7 +75,7 @@ sub run {
     return;
 }
 
-sub process_template {
+sub _process_template {
     my ($self, $quotes) = @_;
     my $out;
 
