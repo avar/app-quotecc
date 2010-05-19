@@ -72,7 +72,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-App::QuoteCC::Output::C - Emit quotes in Perl format
+App::QuoteCC::Output::Perl - Emit quotes in Perl format
 
 =head1 AUTHOR
 

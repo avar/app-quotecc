@@ -2,6 +2,8 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+    - Typo: ::Perl not ::C in App::QuoteCC::Output::Perl
+
 0.02 2010-05-19 13:44:22
 
     - Lots of changes, more docs, bugfixes, Perl backend and more
