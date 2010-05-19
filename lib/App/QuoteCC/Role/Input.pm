@@ -26,7 +26,7 @@ sub file_handle {
     }
 }
 
-require 'quotes';
+requires 'quotes';
 
 1;
 
