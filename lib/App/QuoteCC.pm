@@ -46,7 +46,7 @@ has output => (
 
 has output_format => (
     traits        => [ qw/ Getopt / ],
-    cmd_aliases   => 'F',
+    cmd_aliases   => 'O',
     cmd_flag      => 'output-type',
     isa           => 'Str',
     is            => 'ro',
