@@ -58,18 +58,25 @@ has output_format => (
 sub run {
     my ($self) = @_;
 
-    # Get quotes
-    my $quotes = do {
-        my $quotes_class_short = $self->input_format;
-        my $quotes_class = "App::QuoteCC::Input::" . $quotes_class_short;
-        $quotes_class->require;
-        $quotes_class->new(
-            file => $self->input,
-        )->quotes;
+    my $dynaload = sub {
+        my ($self_method_type, $class_type_ucfirst, $class_type) = @_;
+
+        my $data = do {
+            my $x_class_short = $self->$self_method_type;
+            my $x_class = "App::QuoteCC::${class_type_ucfirst}::" . $x_class_short;
+            $x_class->require;
+            $x_class->new(
+                file => $self->$class_type,
+            )->quotes;
+        };
+
+        return $data;
     };
 
+    my $quotes = $dynaload->(qw/ input_format Input input /);
+
     # Get output
-    my $out = _process_template($quotes);
+    my $out  = _process_template($quotes);
 
     # Spew output
     given ($self->output) {
