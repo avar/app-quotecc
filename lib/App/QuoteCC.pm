@@ -2,8 +2,6 @@ package App::QuoteCC;
 
 use perl5i::latest;
 use Moose;
-use File::Slurp qw/ write_file /;
-use Template;
 use namespace::clean -except => 'meta';
 
 with qw/ MooseX::Getopt::Dashes /;
@@ -59,66 +57,32 @@ sub run {
     my ($self) = @_;
 
     my $dynaload = sub {
-        my ($self_method_type, $class_type_ucfirst, $class_type) = @_;
+        my ($vars, $new_args) = @_;
+        my ($self_method_type, $class_type) = @$vars;
+        my %args = %$new_args;
 
-        my $data = do {
-            my $x_class_short = $self->$self_method_type;
-            my $x_class = "App::QuoteCC::${class_type_ucfirst}::" . $x_class_short;
-            $x_class->require;
-            $x_class->new(
-                file => $self->$class_type,
-            )->quotes;
-        };
-
-        return $data;
+        my $x_class_short = $self->$self_method_type;
+        my $x_class = "App::QuoteCC::${class_type}::" . $x_class_short;
+        $x_class->require;
+        my $obj = $x_class->new(%args);
+        return $obj;
     };
 
-    my $quotes = $dynaload->(qw/ input_format Input input /);
-
-    # Get output
-    my $out  = _process_template($quotes);
-
-    # Spew output
-    given ($self->output) {
-        when ('-') {
-            print $out;
-        }
-        default {
-            write_file($_, $out);
-        }
-    }
+    my $input  = $dynaload->(
+        [ qw/ input_format Input / ],
+        { file => $self->input },
+    );
+    my $quotes = $input->quotes;
+    my $output = $dynaload->(
+        [ qw/ output_format Output / ],
+        {
+            file => $self->output,
+            quotes => $quotes,
+        },
+    );
+    $output->output;
 
     return;
-}
-
-sub _process_template {
-    my ($quotes) = @_;
-    my $out;
-
-    Template->new->process(
-        \*DATA,
-        {
-            quotes => $quotes,
-            size => scalar(@$quotes),
-            escape => sub {
-                my $text = shift;
-                $text =~ s/"/\\"/g;
-                my $was = $text;
-                $text =~ s/\\(\$)/\\\\$1/g;
-                given ($text) {
-                    when (/\n/) {
-                        return join(qq[\\n"\n], map { qq["$_] } split /\n/, $text). q["];
-                    }
-                    default {
-                        return qq["$text"];
-                    }
-                }
-            },
-        },
-        \$out
-    );
-
-    return $out;
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -194,47 +158,3 @@ it under the same terms as Perl itself.
 
 =cut
 
-__DATA__
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <sys/time.h>
-
-const char* const quotes[[% size %]] = {
-[% FOREACH quote IN quotes
-%]    [% escape(quote) %],
-[% END
-%]};
-
-/* returns random integer between min and max, inclusive */
-const int rand_range(const int min, const int max)
-{
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    const long int n = tv.tv_usec * getpid();
-    srand(n);
-
-    return (rand() % (max + 1 - min) + min);
-}
-
-const int main(const int argc, const char **argv)
-{
-    int i;
-    const char* const all = "--all";
-    const size_t all_length = strlen(all);
-
-    if (argc == 2 &&
-        strlen(argv[1]) == all_length &&
-        !strncmp(argv[1], all, all_length)) {
-        for (i = 0; i < [% size %]; i++) {
-            puts(quotes[i]);
-        }
-    } else {
-        const int quote = rand_range(0, [% size %]);
-        puts(quotes[quote]);
-    }
-
-    return EXIT_SUCCESS;
-}

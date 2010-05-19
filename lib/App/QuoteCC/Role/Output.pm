@@ -5,10 +5,15 @@ use Moose::Role;
 use namespace::clean -except => 'meta';
 
 has file => (
-    traits        => [ qw/ Getopt / ],
     isa           => 'Str',
     is            => 'ro',
     documentation => 'The output file to compile to. - for STDOUT',
+);
+
+has quotes => (
+    isa           => 'ArrayRef[Str]',
+    is            => 'ro',
+    documentation => 'The quotes to compile to',
 );
 
 sub file_handle {
@@ -25,6 +30,8 @@ sub file_handle {
         }
     }
 }
+
+requires 'output';
 
 1;
 

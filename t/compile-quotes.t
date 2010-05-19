@@ -35,6 +35,7 @@ for my $test (@test) {
         input => $quotes,
         input_format => $fmt,
         output => $output,
+        output_format => 'C',
     )->run;
     ok(-s $quotes, "$quotes is non-zero size");
     ok(-s $output, "$output is non-zero size");
@@ -50,6 +51,4 @@ for my $test (@test) {
         chomp($quote = qx[$output.exe --all]);
         ok($quote, "Got quote from $output.exe --all");
     }
-
-    undef $_ for $fh1, $fh2, $dir;
 }
