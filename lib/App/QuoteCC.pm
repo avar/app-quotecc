@@ -4,7 +4,7 @@ use perl5i::latest;
 use Moose;
 use File::Slurp qw/ write_file /;
 use Template;
-use namespace::clean -except => [ qw< meta plugins > ];
+use namespace::clean -except => 'meta';
 
 with qw/ MooseX::Getopt::Dashes /;
 
