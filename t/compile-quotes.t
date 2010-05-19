@@ -1,4 +1,3 @@
-use perl5i::latest;
 use Test::More;
 use App::QuoteCC;
 use File::Temp qw<tempdir tempfile>;
