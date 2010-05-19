@@ -139,6 +139,13 @@ Emit all quotes:
 
     /usr/local/bin/failo-wisdom --all > /tmp/quotes.txt
 
+Emit quotes to interactive shells on login, in F</etc/profile>:
+
+    # spread failo's wisdom to interactive shells
+    if [[ $- == *i* ]] ; then
+        failo-wisdom
+    fi
+
 =head1 AUTHOR
 
 E<AElig>var ArnfjE<ouml>rE<eth> Bjarmason <avar@cpan.org>
