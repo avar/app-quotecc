@@ -26,6 +26,8 @@ sub file_handle {
     }
 }
 
+require 'quotes';
+
 1;
 
 =encoding utf8
