@@ -137,7 +137,7 @@ Emit a random quote:
 
 Emit all quotes:
 
-    /usr/local/bin/failo-wisdom --all > /usr/local/bin/quotes.txt
+    /usr/local/bin/failo-wisdom --all > /tmp/quotes.txt
 
 =head1 AUTHOR
 
