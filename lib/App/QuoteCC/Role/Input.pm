@@ -5,7 +5,6 @@ use Moose::Role;
 use namespace::clean -except => 'meta';
 
 has file => (
-    traits        => [ qw/ Getopt / ],
     isa           => 'Str',
     is            => 'ro',
     documentation => 'The quotes file to compile from. - for STDIN',
