@@ -27,7 +27,7 @@ for my $test (@test) {
     my ($fh2, $output) = tempfile( DIR => $dir, SUFFIX => '.c', EXLOCK => 0 );
     ok(-f $_, "tempfile $_ exists") for $quotes, $output;
 
-    my $cmd = qq[curl -s '$url' --output '$quotes'];
+    my $cmd = qq[curl --user-agent 'App::QuoteCC/$App::QuoteCC::VERSION' -s '$url' --output '$quotes'];
     #diag "executing $cmd";
     system $cmd;
     App::QuoteCC->new(
