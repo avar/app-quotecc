@@ -11,10 +11,10 @@ my @test = (
         url => 'http://v.nix.is/~failo/quotes.yml',
         fmt => 'YAML',
     },
-    # {
-    #     url => 'http://www.trout.me.uk/quotes.txt',
-    #     fmt => 'Fortune',
-    # }
+    {
+        url => 'http://www.trout.me.uk/quotes.txt',
+        fmt => 'Fortune',
+    }
 );
 
 for my $test (@test) {
@@ -23,16 +23,18 @@ for my $test (@test) {
 
     # Dir to store our stuff
     my $dir = tempdir( "app-quotecc-XXXX", CLEANUP => 0, TMPDIR => 1 );
+    ok(-d $dir, "tempdir $dir exists");
     my ($fh1, $quotes) = tempfile( DIR => $dir, SUFFIX => '.quotes', EXLOCK => 0 );
     my ($fh2, $output) = tempfile( DIR => $dir, SUFFIX => '.c', EXLOCK => 0 );
+    ok(-f $_, "tempfile $_ exists") for $quotes, $output;
 
     my $cmd = qq[curl -s '$url' --output '$quotes'];
     #diag "executing $cmd";
     system $cmd;
     App::QuoteCC->new(
-        quotes => $quotes,
+        input => $quotes,
+        input_format => $fmt,
         output => $output,
-        format => $fmt,
     )->run;
     ok(-s $quotes, "$quotes is non-zero size");
     ok(-s $output, "$output is non-zero size");
@@ -48,4 +50,6 @@ for my $test (@test) {
         chomp($quote = qx[$output.exe --all]);
         ok($quote, "Got quote from $output.exe --all");
     }
+
+    undef $_ for $fh1, $fh2, $dir;
 }

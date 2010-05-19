@@ -1,4 +1,4 @@
-package App::QuoteCC::Role::Format;
+package App::QuoteCC::Role::Input;
 
 use perl5i::latest;
 use Moose::Role;
@@ -32,7 +32,7 @@ sub file_handle {
 
 =head1 NAME
 
-App::QuoteCC::Role::Format - A role representing a L<App::QuoteCC> format
+App::QuoteCC::Role::Input - A role representing a L<App::QuoteCC> input format
 
 =head1 AUTHOR
 

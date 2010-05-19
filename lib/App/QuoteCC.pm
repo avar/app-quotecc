@@ -18,22 +18,22 @@ has help => (
     documentation => 'This help message',
 );
 
-has quotes => (
+has input => (
     traits        => [ qw/ Getopt / ],
-    cmd_aliases   => 'q',
-    cmd_flag      => 'quotes',
+    cmd_aliases   => 'i',
+    cmd_flag      => 'input',
     isa           => 'Str',
     is            => 'ro',
     documentation => 'The quotes file to compile from. - for STDIN',
 );
 
-has format => (
+has input_format => (
     traits        => [ qw/ Getopt / ],
-    cmd_aliases   => 'f',
-    cmd_flag      => 'format',
+    cmd_aliases   => 'I',
+    cmd_flag      => 'input-type',
     isa           => 'Str',
     is            => 'ro',
-    documentation => 'The format of the file. Any App::QuotesCC::Format::*',
+    documentation => 'The format of the input quotes file. Any App::QuotesCC::Input::*',
 );
 
 has output => (
@@ -46,21 +46,30 @@ has output => (
     documentation => 'Where to output the compiled file, - for STDOUT',
 );
 
+has output_format => (
+    traits        => [ qw/ Getopt / ],
+    cmd_aliases   => 'F',
+    cmd_flag      => 'output-type',
+    isa           => 'Str',
+    is            => 'ro',
+    documentation => 'The format of the output file. Any App::QuotesCC::Output::*',
+);
+
 sub run {
     my ($self) = @_;
 
     # Get quotes
     my $quotes = do {
-        my $quotes_class_short = $self->format;
-        my $quotes_class = "App::QuoteCC::Format::" . $quotes_class_short;
+        my $quotes_class_short = $self->input_format;
+        my $quotes_class = "App::QuoteCC::Input::" . $quotes_class_short;
         $quotes_class->require;
         $quotes_class->new(
-            file => $self->quotes,
+            file => $self->input,
         )->quotes;
     };
 
     # Get output
-    my $out = $self->_process_template($quotes);
+    my $out = _process_template($quotes);
 
     # Spew output
     given ($self->output) {
@@ -76,7 +85,7 @@ sub run {
 }
 
 sub _process_template {
-    my ($self, $quotes) = @_;
+    my ($quotes) = @_;
     my $out;
 
     Template->new->process(
