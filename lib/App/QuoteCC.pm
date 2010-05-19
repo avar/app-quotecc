@@ -146,6 +146,25 @@ Emit quotes to interactive shells on login, in F</etc/profile>:
         failo-wisdom
     fi
 
+=head1 DESCRIPTION
+
+I wrote this program because using L<fortune(1)> and Perl in
+F</etc/profile> to emit a random quote on login was too slow. On my
+system L<fortune(1)> can take ~100 ms from a cold start, although
+subsequent invocations when it's in cache are ~10-20 ms.
+
+Similarly using Perl is also slow, this is in the 80 ms range:
+
+    perl -COEL -MYAML::XS=LoadFile -E'@q = @{ LoadFile("/path/to/quotes.yml") }; @q && say $q[rand @q]'
+
+Either way, when you have a 40 ms ping time to the remote machine
+showing that quote is the major noticeable delay when you do I<ssh
+machine>.
+
+L<quotecc> solves that problem, showing a quote takes around 4 ms
+now. That's comparable with any hello wold program in C that I
+produce.
+
 =head1 AUTHOR
 
 E<AElig>var ArnfjE<ouml>rE<eth> Bjarmason <avar@cpan.org>
