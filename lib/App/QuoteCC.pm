@@ -91,33 +91,54 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-App::QuoteCC - Take a quote file and emit a C program that spews a random quote
+App::QuoteCC - Take a quote file and emit a standalone program that spews a random quote
 
 =head1 SYNOPSIS
 
 Compile a quotes file to a stand-alone binary:
 
-    curl http://v.nix.is/~failo/quotes.yml | quotecc --quotes=- --format=YAML | gcc -x c -o /usr/local/bin/failo-wisdom -
-    curl http://www.trout.me.uk/quotes.txt | quotecc --quotes=- --format=Fortune | gcc -x c -o /usr/local/bin/perl-wisdom -
+    curl http://v.nix.is/~failo/quotes.yml | quotecc -i - -I YAML -o - -O C | gcc -x c -o failo-wisdom -
+    curl http://www.trout.me.uk/quotes.txt | quotecc -i - -I Fortune -o - -O C | gcc -x c -o perl-wisdom -
 
-See how small it is!:
+Or to a fast stand-alone minimal Perl script:
 
-    du -sh /usr/local/bin/*-wisdom
-    56K     /usr/local/bin/failo-wisdom
-    80K     /usr/local/bin/perl-wisdom
+    curl http://v.nix.is/~failo/quotes.yml | quotecc -i - -I YAML -o failo-wisdom.pl -O Perl
+    curl http://www.trout.me.uk/quotes.txt | quotecc -i - -I Fortune -o perl-wisdom.pl -O Perl
 
-Emit a random quote:
+See how small they are:
 
-    time /usr/local/bin/failo-wisdom
+    $ du -sh *-wisdom*
+    56K     failo-wisdom
+    44K     failo-wisdom.pl
+    80K     perl-wisdom
+    76K     perl-wisdom.pl
+
+Emit a random quote with the C program:
+
+    time (./failo-wisdom && ./perl-wisdom)
     Support Batman - vote for the British National Party
+    < dha> Now all I have to do is learn php
+    <@sungo> it's easy.
+    <@sungo> take your perl knowledge. now smash it against child pornography
 
-    real    0m0.003s
+    real    0m0.004s
     user    0m0.000s
+    sys     0m0.008s
+
+Or with the Perl program:
+
+    $ time (perl failo-wisdom.pl && perl perl-wisdom.pl)
+    I just see foreign words like private public static void feces implements shit extending penis
+    <@pndc> Imagine if cleaners were treated like sysadmins. "I've just
+            pissed all over the office floor; it's the cleaner's fault."
+
+    real    0m0.022s
+    user    0m0.012s
     sys     0m0.004s
 
 Emit all quotes:
 
-    /usr/local/bin/failo-wisdom --all > /tmp/quotes.txt
+    ./failo-wisdom --all > /tmp/quotes.txt
 
 Emit quotes to interactive shells on login, in F</etc/profile>:
 
