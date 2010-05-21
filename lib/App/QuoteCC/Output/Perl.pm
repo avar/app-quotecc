@@ -2,7 +2,6 @@ package App::QuoteCC::Output::Perl;
 
 use perl5i::latest;
 use Moose;
-use File::Slurp qw/ write_file /;
 use Data::Dump 'dump';
 use Template;
 use Data::Section qw/ -setup /;
@@ -36,7 +35,8 @@ sub output {
             print $out;
         }
         default {
-            write_file($_, $out);
+            open my $fh, ">", $_;
+            print $fh $out;
         }
     }
 

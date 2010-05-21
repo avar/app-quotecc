@@ -4,6 +4,10 @@ Revision history for App::QuoteCC
 
     - Typo: ::Perl not ::C in App::QuoteCC::Output::Perl
 
+    - Hack to make UTF-8 input work. Use Encode to mark strings as
+      UTF-8 (why weren't they marked before?!), and use open, not
+      File::Slurp to spit out files.
+
 0.02 2010-05-19 13:44:22
 
     - Lots of changes, more docs, bugfixes, Perl backend and more
