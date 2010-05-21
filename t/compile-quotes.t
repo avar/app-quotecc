@@ -4,7 +4,7 @@ use App::QuoteCC;
 use File::Temp qw<tempdir tempfile>;
 
 plan skip_all => "Need curl / gcc to test" unless qx[ which curl && which gcc ];
-plan tests => 140;
+plan tests => 160;
 
 my @test = (
     {
@@ -62,6 +62,10 @@ for my $compiler (qw/Perl C/) {
                     chomp($quote = qx[$^X $output --all]);
                     ok($quote, "Got quote from $^X $output --all");
                     cmp_ok(length($quote), '>', 1000, "All quotes were long enough");
+                    if ($url =~ /failo/) {
+                        like $quote, qr/mosque on Phobos/, "sanity check";
+                        like $quote, qr/Blökkumaður/, "sanity check";
+                    }
                 }
             }
         }
