@@ -2,6 +2,8 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+    - Add support for Lua output
+
 0.03 2010-05-21 14:27:39
 
     - Typo: ::Perl not ::C in App::QuoteCC::Output::Perl
