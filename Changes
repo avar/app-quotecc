@@ -2,6 +2,8 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+0.04 2010-05-31 09:32:23
+
     - Add support for Lua output. The Lua output requires the Lua
       POSIX library.
 
