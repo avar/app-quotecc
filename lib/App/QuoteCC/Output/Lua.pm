@@ -105,6 +105,8 @@ __DATA__
 __[ program ]__
 #!/usr/bin/env lua
 
+require 'posix'
+
 local quotes = {[%
 FOREACH quote IN quotes %]
     [% escape(quote) %],[%
@@ -114,7 +116,8 @@ END %]
 if arg[1] == "--all" then
     print(table.concat(quotes, "\n"))
 else
-    -- Note: not very random when called more than once per second
-    math.randomseed(os.time())
+    local pid = posix.getpid("pid")
+    local time = os.time();
+    math.randomseed(time * pid)
     print(quotes[math.random(#quotes)])
 end
