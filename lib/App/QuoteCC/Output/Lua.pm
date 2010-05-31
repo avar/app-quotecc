@@ -105,10 +105,10 @@ __DATA__
 __[ program ]__
 #!/usr/bin/env lua
 
-local quotes = {
-[% FOREACH quote IN quotes %]
-    [% escape(quote) %],
-[% END %]
+local quotes = {[%
+FOREACH quote IN quotes %]
+    [% escape(quote) %],[%
+END %]
 }
 
 if arg[1] == "--all" then
