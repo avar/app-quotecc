@@ -23,7 +23,7 @@ for my $compiler (qw/Perl C/) {
         my $fmt = $test->{fmt};
 
         # Dir to store our stuff
-        my $dir = tempdir( "app-quotecc-XXXX", CLEANUP => 0, TMPDIR => 1 );
+        my $dir = tempdir( "app-quotecc-XXXX", CLEANUP => 1, TMPDIR => 1 );
         ok(-d $dir, "tempdir $dir exists");
         my ($fh1, $quotes) = tempfile( DIR => $dir, SUFFIX => '.quotes', EXLOCK => 0 );
         my ($fh2, $output) = tempfile( DIR => $dir, SUFFIX => '.' . lc($compiler), EXLOCK => 0 );
