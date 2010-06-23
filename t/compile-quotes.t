@@ -3,7 +3,10 @@ use Test::More;
 use App::QuoteCC;
 use File::Temp qw<tempdir tempfile>;
 
-plan skip_all => "Need curl / gcc to test" unless qx[ which curl && which gcc ];
+plan skip_all => "Need curl / gcc to test"
+    unless
+        qx[ curl --version ] =~ /^curl \d+\..*\nProtocols:/s and
+        qx[ gcc --version ]  =~ /Free Software Foundation/;
 plan tests => 160;
 
 my @test = (

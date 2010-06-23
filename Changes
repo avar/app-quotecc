@@ -4,6 +4,8 @@ Revision history for App::QuoteCC
 
     - Cleanup the tempdir() after we're done with it.
 
+    - Be more pedantic about checking for curl/gcc due to cpantesters failures
+
 0.04 2010-05-31 09:32:23
 
     - Add support for Lua output. The Lua output requires the Lua
