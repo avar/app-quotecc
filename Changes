@@ -2,6 +2,8 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+0.05 2010-06-23 13:49:48
+
     - Cleanup the tempdir() after we're done with it.
 
     - Be more pedantic about checking for curl/gcc due to cpantesters failures
