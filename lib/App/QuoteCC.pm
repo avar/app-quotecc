@@ -8,7 +8,12 @@ use namespace::clean -except => 'meta';
 
 with qw/ MooseX::Getopt::Dashes /;
 
-has help => (
+# MooseX::Getopt 81b19ed83c by Karen Etheridge changed the help
+# attribute to help_flag.
+{
+my @go_attrs = MooseX::Getopt::GLD->meta->get_attribute_list;
+my $help_attr = 'help_flag' ~~ @go_attrs ? 'help_flag' : 'help';
+has $help_attr => (
     traits        => [ qw/ Getopt / ],
     cmd_aliases   => 'h',
     cmd_flag      => 'help',
@@ -17,6 +22,7 @@ has help => (
     default       => 0,
     documentation => 'This help message',
 );
+}
 
 has input => (
     traits        => [ qw/ Getopt / ],
