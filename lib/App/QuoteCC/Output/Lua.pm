@@ -43,9 +43,6 @@ sub _process_template {
     my $template = $self->template;
     my $out;
 
-    use Encode;
-    Encode::_utf8_on($_) for @$quotes;
-
     Template->new->process(
         \$template,
         {

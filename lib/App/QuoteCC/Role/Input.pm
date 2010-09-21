@@ -18,7 +18,7 @@ sub file_handle {
 
     given ($file) {
         when ('-') {
-            binmode STDIN, ":utf8";
+            binmode STDIN, ":encoding(UTF-8)";
             return *STDIN;
         }
         default {

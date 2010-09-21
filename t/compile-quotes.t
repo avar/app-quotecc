@@ -1,6 +1,7 @@
 use 5.010;
 use Test::More;
 use App::QuoteCC;
+use Encode;
 use File::Temp qw<tempdir tempfile>;
 
 plan skip_all => "Need curl / gcc to test"
@@ -63,6 +64,11 @@ for my $compiler (qw/Perl C/) {
                     cmp_ok(length($quote), '>', 5, "quote was long enough");
 
                     chomp($quote = qx[$^X $output --all]);
+
+                    # The program just spews raw octets, but we know
+                    # they're UTF-8 octets.
+                    Encode::_utf8_on($quote);
+
                     ok($quote, "Got quote from $^X $output --all");
                     cmp_ok(length($quote), '>', 1000, "All quotes were long enough");
                     if ($url =~ /failo/) {

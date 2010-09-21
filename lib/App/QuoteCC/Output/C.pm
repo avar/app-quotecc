@@ -42,10 +42,6 @@ sub _process_template {
     my $template = $self->template;
     my $out;
 
-    # Hack, no idea why stuff from STDIN isn't utf8 already.
-    use Encode;
-    Encode::_utf8_on($_) for @$quotes;
-
     Template->new->process(
         \$template,
         {

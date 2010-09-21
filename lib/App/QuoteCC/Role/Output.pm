@@ -24,10 +24,11 @@ sub file_handle {
 
     given ($file) {
         when ('-') {
+            binmode STDOUT, ":encoding(UTF-8)";
             return *STDOUT;
         }
         default {
-            open my $fh, '>', $file;
+            open my $fh, '>:encoding(UTF-8)', $file;
             return $fh;
         }
     }
