@@ -1,6 +1,8 @@
 package App::QuoteCC::Output::C;
 
-use perl5i::latest;
+use 5.010;
+use strict;
+use warnings;
 use Moose;
 use Template;
 use Data::Section qw/ -setup /;

@@ -1,6 +1,8 @@
 package App::QuoteCC::Role::Input;
 
-use perl5i::latest;
+use 5.010;
+use strict;
+use warnings;
 use Moose::Role;
 use namespace::clean -except => 'meta';
 
@@ -16,10 +18,11 @@ sub file_handle {
 
     given ($file) {
         when ('-') {
+            binmode STDIN, ":utf8";
             return *STDIN;
         }
         default {
-            open my $fh, '<', $file;
+            open my $fh, '<:encoding(UTF-8)', $file;
             return $fh;
         }
     }

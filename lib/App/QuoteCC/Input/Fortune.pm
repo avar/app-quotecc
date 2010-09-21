@@ -1,6 +1,8 @@
 package App::QuoteCC::Input::Fortune;
 
-use perl5i::latest;
+use 5.010;
+use strict;
+use warnings;
 use Moose;
 use namespace::clean -except => 'meta';
 

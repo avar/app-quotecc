@@ -2,6 +2,12 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+    - Stop using perl5i to avoid perl5i issue #99
+      (http://github.com/schwern/perl5i/issues#issue/99)
+
+      Maybe I'll give perl5i another shot once it's more stable. But
+      for now I don't feel like chasing its bugs.
+
 0.05 2010-06-23 13:49:48
 
     - Cleanup the tempdir() after we're done with it.

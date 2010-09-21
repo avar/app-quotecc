@@ -1,6 +1,8 @@
 package App::QuoteCC::Input::YAML;
 
-use perl5i::latest;
+use 5.010;
+use strict;
+use warnings;
 use Moose;
 use YAML::Syck qw/ Load /;
 use namespace::clean -except => 'meta';

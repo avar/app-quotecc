@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 use v5.10;
-use perl5i::latest;
+use strict;
+use warnings;
 use App::QuoteCC;
 
 # Show help if run without arguments

@@ -1,6 +1,8 @@
 package App::QuoteCC::Role::Output;
 
-use perl5i::latest;
+use 5.010;
+use strict;
+use warnings;
 use Moose::Role;
 use namespace::clean -except => 'meta';
 
