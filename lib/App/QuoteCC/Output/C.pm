@@ -31,15 +31,7 @@ sub output {
     my $out  = $self->_process_template;
 
     # Spew output
-    given ($self->file) {
-        when ('-') {
-            print $out;
-        }
-        default {
-            open my $fh, ">", $_;
-            print $fh $out;
-        }
-    }
+    $self->spew_output($out);
 
     return;
 }

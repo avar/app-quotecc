@@ -35,6 +35,23 @@ sub file_handle {
 
 requires 'output';
 
+sub spew_output {
+    my ($self, $out) = @_;
+
+    given ($self->file) {
+        when ('-') {
+            binmode STDOUT, ":utf8";
+            print $out;
+        }
+        default {
+            open my $fh, ">:encoding(UTF-8)", $_;
+            print $fh $out;
+        }
+    }
+
+    return;
+}
+
 1;
 
 =encoding utf8
