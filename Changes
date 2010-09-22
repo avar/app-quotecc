@@ -2,6 +2,8 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+0.08 2010-09-22 13:46:28
+
     - Replace horridly complex Lua string escaping with something that
       just uses Lua's multiline string
       syntax. http://www.wellho.net/resources/ex.php4?item=u104/mlx
