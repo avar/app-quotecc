@@ -2,6 +2,7 @@ use 5.010;
 use Test::More;
 use App::QuoteCC;
 use Encode;
+use File::Slurp qw(slurp);
 use File::Temp qw<tempdir tempfile>;
 
 plan skip_all => "Need curl / gcc to test"
@@ -23,10 +24,6 @@ my @test = (
 
 sub test_quotes_encoding {
     my ($output, $quote, $url) = @_;
-
-    # The program just spews raw octets, but we know
-    # they're UTF-8 octets.
-    Encode::_utf8_on($quote);
 
     ok($quote, "Got quote from $output --all");
     cmp_ok(length($quote), '>', 1000, "All quotes were long enough");
@@ -93,6 +90,9 @@ for my $compiler (qw/Perl C Lua/) {
             }
             when ('Perl') {
                 for (1..10) {
+                    my $raw = slurp($output);
+                    unlike($raw, qr/require MIME::Base64/, "Data::Dump didn't use modules");
+
                     chomp(my $quote = qx[$^X $output]);
                     ok($quote, "Got quote from $^X $output");
                     cmp_ok(length($quote), '>', 5, "quote was long enough");

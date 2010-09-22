@@ -6,7 +6,6 @@ use warnings;
 use Moose;
 use Data::Dump 'dump';
 use Template;
-use Encode;
 use Data::Section qw/ -setup /;
 use namespace::clean -except => [ qw/ meta merged_section_data section_data / ];
 
@@ -43,9 +42,6 @@ sub _process_template {
     my $quotes = $self->quotes;
     my $template = $self->template;
     my $out;
-
-    # emit raw octets, not UTF-8 marked strings with clever escaping.
-    $_ = encode("utf8", $_) for @$quotes;
 
     Template->new->process(
         \$template,

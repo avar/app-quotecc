@@ -18,11 +18,12 @@ sub file_handle {
 
     given ($file) {
         when ('-') {
-            binmode STDIN, ":encoding(UTF-8)";
+            binmode STDIN;
             return *STDIN;
         }
         default {
-            open my $fh, '<:encoding(UTF-8)', $file;
+            open my $fh, '<', $file;
+            binmode $fh;
             return $fh;
         }
     }

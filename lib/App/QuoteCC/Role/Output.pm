@@ -41,11 +41,12 @@ sub spew_output {
 
     given ($self->file) {
         when ('-') {
-            binmode STDOUT, ":utf8";
+            binmode STDOUT;
             print $out;
         }
         default {
-            open my $fh, ">:encoding(UTF-8)", $_;
+            open my $fh, ">", $_;
+            binmode $fh;
             print $fh $out;
         }
     }

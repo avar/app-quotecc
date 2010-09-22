@@ -2,6 +2,9 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+    - Don't mark any strings coming into the program as UTF-8. Just
+      apply binmode() to the filehandles. Garbage in/garbage out.
+
     - Test UTF-8 output of C programs, and test Lua if we have it
 
 0.07 2010-09-21 19:07:44
