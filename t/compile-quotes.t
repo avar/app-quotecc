@@ -8,7 +8,7 @@ plan skip_all => "Need curl / gcc to test"
     unless
         qx[ curl --version ] =~ /^curl \d+\..*\nProtocols:/s and
         qx[ gcc --version ]  =~ /Free Software Foundation/;
-plan tests => 350;
+plan tests => 380;
 
 my @test = (
     {
@@ -33,6 +33,7 @@ sub test_quotes_encoding {
     if ($url =~ /failo/) {
         like $quote, qr/mosque on Phobos/, "sanity check";
         like $quote, qr/Blökkumaður/, "sanity check";
+        like $quote, qr/botti líka/, "sanity check";
     }
 }
 
