@@ -2,6 +2,8 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+    - Test UTF-8 output of C programs, and test Lua if we have it
+
 0.07 2010-09-21 19:07:44
 
     - FIX UTF-8 output & tests.
