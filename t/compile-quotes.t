@@ -63,7 +63,6 @@ for my $compiler (qw/Perl C Lua/) {
                   SKIP: {
                     skip "Don't have a Lua on this system", 6
                         unless qx[ lua -e 'require "posix"; print(string.format("The time is %s", os.time()));' ] =~ /^The time is \d+$/;
-                    skip "Lua escaping with multilines is buggy", 6 unless $url =~ /failo/;
                     system "chmod +x $output";
 
                     chomp(my $quote = qx[lua $output]);

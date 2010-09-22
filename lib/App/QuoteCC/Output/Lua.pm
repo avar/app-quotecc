@@ -50,17 +50,7 @@ sub _process_template {
             size => scalar(@$quotes),
             escape => sub {
                 my $text = shift;
-                $text =~ s/"/\\"/g;
-                my $was = $text;
-                $text =~ s/\\(\$)/\\\\$1/g;
-                given ($text) {
-                    when (/\n/) {
-                        return join(qq[\\n"\n], map { qq["$_] } split /\n/, $text). q["];
-                    }
-                    default {
-                        return qq["$text"];
-                    }
-                }
+                return "[===[$text]===]";
             },
         },
         \$out

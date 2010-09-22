@@ -2,6 +2,10 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+    - Replace horridly complex Lua string escaping with something that
+      just uses Lua's multiline string
+      syntax. http://www.wellho.net/resources/ex.php4?item=u104/mlx
+
     - Don't mark any strings coming into the program as UTF-8. Just
       apply binmode() to the filehandles. Garbage in/garbage out.
 
