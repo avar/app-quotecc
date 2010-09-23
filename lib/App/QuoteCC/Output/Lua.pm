@@ -4,7 +4,6 @@ use 5.010;
 use strict;
 use warnings;
 use Moose;
-use Data::Dump 'dump';
 use Template;
 use Data::Section qw/ -setup /;
 use namespace::clean -except => [ qw/ meta merged_section_data section_data / ];
