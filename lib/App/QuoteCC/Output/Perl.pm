@@ -4,7 +4,6 @@ use 5.010;
 use strict;
 use warnings;
 use Moose;
-use Data::Dump 'dump';
 use Template;
 use Data::Section qw/ -setup /;
 use namespace::clean -except => [ qw/ meta merged_section_data section_data / ];
@@ -47,11 +46,10 @@ sub _process_template {
         \$template,
         {
             quotes => $quotes,
-            size => scalar(@$quotes),
-            escape => sub {
-                my ($quotes) = @_;
-                my $str = dump @$quotes;
-                return $str;
+            repeat => sub {
+                my ($s, $c) = @_;
+                $c += 4;
+                return scalar $s x $c;
             },
         },
         \$out
@@ -85,10 +83,12 @@ __DATA__
 __[ program ]__
 #!/usr/bin/env perl
 
-our @QUOTES = [% escape(quotes) %];
-
+our @QUOTES = ([% FOREACH quote IN quotes %]<<'8[% repeat("=", loop.count) %]D',[% END %]);
+[% FOREACH quote IN quotes %][% quote %]
+8[% repeat("=", loop.count) %]D
+[% END %]
 if (@ARGV && $ARGV[0] eq '--all') {
-    print $_, "\n" for @QUOTES;
+    print for @QUOTES;
 } else {
-    print $QUOTES[rand @QUOTES], "\n";
+    print $QUOTES[rand @QUOTES];
 }
