@@ -83,12 +83,13 @@ __DATA__
 __[ program ]__
 #!/usr/bin/env perl
 
-our @QUOTES = ([% FOREACH quote IN quotes %]<<'----[% loop.count %]----8========D',[% END %]);
-[% FOREACH quote IN quotes %][% quote %]
-----[% loop.count %]----8========D
-[% END %]
 if (@ARGV && $ARGV[0] eq '--all') {
     print for @QUOTES;
 } else {
     print $QUOTES[rand @QUOTES];
 }
+
+BEGIN { our @QUOTES = ([% FOREACH quote IN quotes %]<<'----[% loop.count %]----8========D',[% END %]); }
+[% FOREACH quote IN quotes %][% quote %]
+----[% loop.count %]----8========D[% UNLESS loop.last %]
+[% END %][% END %]
