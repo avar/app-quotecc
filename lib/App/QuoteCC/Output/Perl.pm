@@ -83,9 +83,9 @@ __DATA__
 __[ program ]__
 #!/usr/bin/env perl
 
-our @QUOTES = ([% FOREACH quote IN quotes %]<<'8[% repeat("=", loop.count) %]D',[% END %]);
+our @QUOTES = ([% FOREACH quote IN quotes %]<<'----[% loop.count %]----8========D',[% END %]);
 [% FOREACH quote IN quotes %][% quote %]
-8[% repeat("=", loop.count) %]D
+----[% loop.count %]----8========D
 [% END %]
 if (@ARGV && $ARGV[0] eq '--all') {
     print for @QUOTES;

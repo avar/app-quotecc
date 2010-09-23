@@ -2,6 +2,9 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+    - Use the not-so-well-known dong string delimiting syntax in the
+      Perl emitter.
+
 0.08 2010-09-22 13:46:28
 
     - Replace horridly complex Lua string escaping with something that
