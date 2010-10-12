@@ -2,6 +2,16 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+    - Don't FAIL due to test count error on systems without lua
+    
+      The skip count was always off on systems without lua. We said we
+      skipped 6 tests, but it was 3 where the URL wasn't =~ /failo/.
+    
+      It's easier to just skip the entire test suite on those systems, so
+      move the prereq for lua before the plan.
+    
+      Also don't run each of those tests 10 times. There's no need.
+
 0.09 2010-09-23 08:54:47
 
     - Use the not-so-well-known dong string delimiting syntax in the
