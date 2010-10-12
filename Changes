@@ -2,6 +2,8 @@ Revision history for App::QuoteCC
 
 {{$NEXT}}
 
+0.10 2010-10-12 21:19:15
+
     - Don't FAIL due to test count error on systems without lua
     
       The skip count was always off on systems without lua. We said we
